@@ -28,8 +28,7 @@ export default function Index() {
 
   const [imagesState, setImagesState] = useState(
     primaryImages.map(() => ({
-      isPrimary: true,
-      scale: 1,
+      clickCount: 0,
     }))
   );
 
@@ -37,11 +36,8 @@ export default function Index() {
     setImagesState((prevState) =>
       prevState.map((item, i) => {
         if (i === index) {
-          const newScale = item.scale < 2 ? item.scale + 0.2 : item.scale;
-          return {
-            isPrimary: !item.isPrimary,
-            scale: newScale,
-          };
+          const newClickCount = (item.clickCount + 1) % 3;
+          return { clickCount: newClickCount };
         }
         return item;
       })
@@ -49,149 +45,69 @@ export default function Index() {
   };
 
   return (
-    <View
-      style={{
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
-      <ScrollView
-        contentContainerStyle={{
-          flexGrow: 1,
-          alignItems: "center",
-        }}
-      >
+    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+      <ScrollView contentContainerStyle={{ alignItems: "center" }}>
+        
         {/* Segitiga */}
-        <View
-          style={{
-            width: 0,
-            height: 0,
-            borderLeftWidth: 35,
-            borderRightWidth: 35,
-            borderBottomWidth: 50,
-            borderLeftColor: "transparent",
-            borderRightColor: "transparent",
-            borderBottomColor: "yellow",
-            marginTop: 40,
-          }}
-        />
+        <View style={{
+          width: 0, height: 0, marginTop: 40,
+          borderLeftWidth: 35, borderRightWidth: 35, borderBottomWidth: 50,
+          borderLeftColor: "transparent", borderRightColor: "transparent", borderBottomColor: "yellow",
+        }} />
 
         {/* Pil */}
-        <View
-          style={{
-            width: 90,
-            height: 35,
-            backgroundColor: "purple",
-            borderRadius: 17.5,
-            marginTop: 20,
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <Text
-            style={{
-              color: "white",
-              fontWeight: "bold",
-              fontSize: 12,
-            }}
-          >
+        <View style={{
+          width: 90, height: 35, backgroundColor: "purple",
+          borderRadius: 17.5, marginTop: 20, justifyContent: "center", alignItems: "center",
+        }}>
+          <Text style={{ color: "white", fontWeight: "bold", fontSize: 12 }}>
             105841105422
           </Text>
         </View>
 
         {/* Persegi Panjang */}
-        <View
-          style={{
-            width: 100,
-            height: 40,
-            backgroundColor: "green",
-            marginTop: 20,
-            borderRadius: 5,
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <Text
-            style={{
-              color: "white",
-              fontWeight: "bold",
-              fontSize: 14,
-            }}
-          >
+        <View style={{
+          width: 100, height: 40, backgroundColor: "green", marginTop: 20,
+          borderRadius: 5, justifyContent: "center", alignItems: "center",
+        }}>
+          <Text style={{ color: "white", fontWeight: "bold", fontSize: 14 }}>
             Alya Anandha
           </Text>
         </View>
-
+        
         {/* Dua gambar */}
-        <View
-          style={{
-            flexDirection: "row",
-            justifyContent: "center",
-            marginTop: 20,
-          }}
-        >
-          <Image
-            style={{
-              width: 300,
-              height: 250,
-              marginRight: 10,
-            }}
-            source={{
-              uri: "https://simak.unismuh.ac.id/upload/mahasiswa/105841105422_.jpg?1751871436",
-            }}
-          />
-
-          <Image
-            style={{
-              width: 300,
-              height: 250,
-              marginLeft: 10,
-            }}
-            source={{
-              uri: "https://www.gifcen.com/wp-content/uploads/2022/01/wallpaper-gif-9.gif",
-            }}
-          />
+        <View style={{ flexDirection: "row", marginTop: 20 }}>
+          <Image style={{ width: 300, height: 250, marginRight: 10 }}
+            source={{ uri: "https://simak.unismuh.ac.id/upload/mahasiswa/105841105422_.jpg?1751871436" }} />
+          <Image style={{ width: 300, height: 250, marginLeft: 10 }}
+            source={{ uri: "https://www.gifcen.com/wp-content/uploads/2022/01/wallpaper-gif-9.gif" }} />
         </View>
-
-        {/* Grid 3x3 Gambar */}
-        <View
-          style={{
-            flexDirection: "row",
-            flexWrap: "wrap",
-            justifyContent: "center",
-            marginTop: 30,
-            paddingBottom: 50,
-          }}
-        >
-          {primaryImages.map((img, index) => {
-            const { isPrimary, scale } = imagesState[index];
+        {/* Grid 3x3 */}
+        <View style={{
+          flexDirection: "row", flexWrap: "wrap", justifyContent: "center",
+          marginTop: 30, paddingBottom: 50, width: 360
+        }}>
+          {primaryImages.map((_, index) => {
+            const { clickCount } = imagesState[index];
+            const isPrimary = clickCount === 0;
+            const scale = clickCount === 0 ? 1 : clickCount === 1 ? 1.2 : 1.4;
             return (
-              <View
-                key={index}
+              <TouchableOpacity
+                key={index} onPress={() => handleImagePress(index)}
+                activeOpacity={0.8}
                 style={{
-                  width: 210,
-                  height: 210,
-                  justifyContent: "center",
-                  alignItems: "center",
-                  margin: 5,
+                  width: 100, height: 100, margin: 10,
+                  justifyContent: "center", alignItems: "center",
                 }}
               >
-                <TouchableOpacity
-                  onPress={() => handleImagePress(index)}
-                  activeOpacity={0.8}
-                >
-                  <Image
-                    source={{ uri: isPrimary ? primaryImages[index] : altImages[index] }}
-                    style={{
-                      width: 100,
-                      height: 100,
-                      borderRadius: 10,
-                      transform: [{ scale }],
-                    }}
-                  />
-                </TouchableOpacity>
-              </View>
+                <Image
+                  source={{ uri: isPrimary ? primaryImages[index] : altImages[index] }}
+                  style={{
+                    width: 100, height: 100, borderRadius: 10,
+                    transform: [{ scale }],
+                  }}
+                />
+              </TouchableOpacity>
             );
           })}
         </View>
