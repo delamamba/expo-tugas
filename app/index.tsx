@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
+import { Image, ScrollView, TouchableOpacity, View } from "react-native";
 
 export default function Index() {
   const primaryImages = [
@@ -33,11 +33,11 @@ export default function Index() {
   );
 
   const handleImagePress = (index: number) => {
-    setImagesState((prevState) =>
-      prevState.map((item, i) => {
+    setImagesState((prev) =>
+      prev.map((item, i) => {
         if (i === index) {
-          const newClickCount = (item.clickCount + 1) % 3;
-          return { clickCount: newClickCount };
+          const newCount = (item.clickCount + 1) % 3;
+          return { clickCount: newCount };
         }
         return item;
       })
@@ -45,67 +45,44 @@ export default function Index() {
   };
 
   return (
-    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-      <ScrollView contentContainerStyle={{ alignItems: "center" }}>
-        
-        {/* Segitiga */}
-        <View style={{
-          width: 0, height: 0, marginTop: 40,
-          borderLeftWidth: 35, borderRightWidth: 35, borderBottomWidth: 50,
-          borderLeftColor: "transparent", borderRightColor: "transparent", borderBottomColor: "yellow",
-        }} />
-
-        {/* Pil */}
-        <View style={{
-          width: 90, height: 35, backgroundColor: "purple",
-          borderRadius: 17.5, marginTop: 20, justifyContent: "center", alignItems: "center",
-        }}>
-          <Text style={{ color: "white", fontWeight: "bold", fontSize: 12 }}>
-            105841105422
-          </Text>
-        </View>
-
-        {/* Persegi Panjang */}
-        <View style={{
-          width: 100, height: 40, backgroundColor: "green", marginTop: 20,
-          borderRadius: 5, justifyContent: "center", alignItems: "center",
-        }}>
-          <Text style={{ color: "white", fontWeight: "bold", fontSize: 14 }}>
-            Alya Anandha
-          </Text>
-        </View>
-        
-        {/* Dua gambar */}
-        <View style={{ flexDirection: "row", marginTop: 20 }}>
-          <Image style={{ width: 300, height: 250, marginRight: 10 }}
-            source={{ uri: "https://simak.unismuh.ac.id/upload/mahasiswa/105841105422_.jpg?1751871436" }} />
-          <Image style={{ width: 300, height: 250, marginLeft: 10 }}
-            source={{ uri: "https://www.gifcen.com/wp-content/uploads/2022/01/wallpaper-gif-9.gif" }} />
-        </View>
-        {/* Grid 3x3 */}
-        <View style={{
-          flexDirection: "row", flexWrap: "wrap", justifyContent: "center",
-          marginTop: 30, paddingBottom: 50, width: 360
-        }}>
+    <View style={{ flex: 1, justifyContent: "center", alignItems: "center", backgroundColor: "#f5f5f5" }}>
+      <ScrollView contentContainerStyle={{ alignItems: "center", paddingVertical: 30 }}>
+        <View
+          style={{
+            flexDirection: "row",
+            flexWrap: "wrap",
+            justifyContent: "center",
+            width: 330,
+          }}
+        >
           {primaryImages.map((_, index) => {
             const { clickCount } = imagesState[index];
-            const isPrimary = clickCount === 0;
+            const uri = clickCount === 0 ? primaryImages[index] : altImages[index];
             const scale = clickCount === 0 ? 1 : clickCount === 1 ? 1.2 : 1.4;
+            const baseSize = 100;
+            const size = baseSize * scale;
+
             return (
               <TouchableOpacity
-                key={index} onPress={() => handleImagePress(index)}
+                key={index}
+                onPress={() => handleImagePress(index)}
                 activeOpacity={0.8}
                 style={{
-                  width: 100, height: 100, margin: 10,
-                  justifyContent: "center", alignItems: "center",
+                  width: baseSize,
+                  height: baseSize,
+                  margin: 5,
+                  justifyContent: "center",
+                  alignItems: "center",
                 }}
               >
                 <Image
-                  source={{ uri: isPrimary ? primaryImages[index] : altImages[index] }}
+                  source={{ uri }}
                   style={{
-                    width: 100, height: 100, borderRadius: 10,
-                    transform: [{ scale }],
+                    width: size,
+                    height: size,
+                    borderRadius: 10,
                   }}
+                  resizeMode="cover"
                 />
               </TouchableOpacity>
             );
