@@ -3,8 +3,9 @@ import { ScrollView, Text, View } from "react-native";
 export default function Index() {
   return (
     <ScrollView contentContainerStyle={{ padding: 20 }}>
-      {/* Static Fonts */}
-      <Text style={{ fontFamily: "lato-bold", fontSize: 24 }}>
+      
+    
+      <Text style={{ fontFamily: "lato-bold", fontSize: 26, color: "blue", fontWeight: "bold" }}>
         Azzah Aulia
         {"\n"}105841105022
       </Text>
@@ -25,7 +26,8 @@ export default function Index() {
         {"\n"}105841105422
       </Text>
 
-      {/* Variable Fonts */}
+
+
       <Text style={{ fontFamily: "ibmplex-variable", fontSize: 24 }}>
         105841105522
         {"\n"}M.Fikri Haikal Ayatullah
