@@ -4,7 +4,6 @@ export default function Index() {
   return (
     <ScrollView contentContainerStyle={{ padding: 20 }}>
       
-    
       <Text style={{ fontFamily: "lato-bold", fontSize: 26, color: "blue", fontWeight: "bold" }}>
         Azzah Aulia
         {"\n"}105841105022
