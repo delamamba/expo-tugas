@@ -4,6 +4,14 @@ import Feather from "@expo/vector-icons/Feather";
 export default function TabsLayout() {
   return (
     <Tabs screenOptions={{ tabBarActiveTintColor: "red" }}>
+      
+      <Tabs.Screen
+        name="user/[id]"
+        options={{
+          title: "User",
+          href : null
+        }}
+        />
       <Tabs.Screen
         name="index"
         options={{

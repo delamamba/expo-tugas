@@ -1,62 +1,94 @@
-import { View, Text, Image, ScrollView } from 'react-native';
+import { Link } from 'expo-router';
+import { View, Text, ScrollView, StyleSheet } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
+
+const users = [
+  {
+    id: '1',
+    name: 'Alya Anandha',
+  },
+  {
+    id: '2',
+    name: 'Muh. Fikri Haikal Ayatullah',
+  },
+  {
+    id: '3',
+    name: 'Muh. Dirham Rahim',
+  },
+  {
+    id: '4',
+    name: 'Zaskya Aulia Ashar',
+  },
+  {
+    id: '5',
+    name: 'Muh. Ilham Akbar',
+  },
+  {
+    id: '6',
+    name: 'Zelvia',
+  },
+  {
+    id: '7',
+    name: 'A. Difhta Rameyza K',
+  },
+  {
+    id: '8',
+    name: 'Arsifah Ainun Aulia',
+  },
+  {
+    id: '9',
+    name: 'Tegar Surya Prayoga',
+  },
+  {
+    id: '10',
+    name: 'A. Angke Riona Megawan',
+  },
+];
 
 export default function TabHome() {
   return (
-    <ScrollView 
-      contentContainerStyle={{ 
-        flexGrow: 1, 
-        justifyContent: 'center', 
-        alignItems: 'center', 
-        padding: 20, 
-        backgroundColor: '#f5f5f5' // latar belakang lembut
-      }}
-    >
-      <Text style={{ 
-        fontSize: 24, 
-        fontWeight: 'bold', 
-        marginBottom: 16, 
-        color: '#333', 
-        textAlign: 'center' 
-      }}>
-        Universitas Muhammadiyah Makassar
-      </Text>
+    <ScrollView contentContainerStyle={styles.container}>
 
-      <Image 
-        source={require('../../assets/images/Unismuh-Makassar.jpg')} 
-        style={{ 
-          width: 300, 
-          height: 200,  
-          marginBottom: 12,
-          borderRadius: 10, 
-        }} 
-        resizeMode="cover" 
-      />
-
-      <View style={{ 
-        backgroundColor: '#fff', 
-        padding: 16, 
-        borderRadius: 10, 
-        shadowColor: '#000', 
-        shadowOffset: { width: 0, height: 2 }, 
-        shadowOpacity: 0.2, 
-        shadowRadius: 4, 
-        elevation: 4, // Android
-        width: '100%'
-      }}>
-        <Text style={{ 
-          textAlign: 'center', 
-          fontSize: 16, 
-          color: '#555' 
-        }}>
-          Universitas Muhammadiyah Makassar, yang lebih dikenal dengan nama Unismuh Makassar, 
-          adalah salah satu perguruan tinggi swasta ternama di Indonesia Timur. Berdiri sejak tahun 1963, 
-          kampus ini terletak di Jalan Sultan Alauddin No. 259, Makassar, Sulawesi Selatan. 
-          Dengan semangat “Ilmu Amaliah, Amal Ilmiah, dan Akhlakul Karimah”, 
-          Unismuh berkomitmen mencetak lulusan yang unggul dalam bidang akademik sekaligus memiliki akhlak mulia. 
-          Memiliki berbagai fakultas dan program studi, Unismuh Makassar aktif mengembangkan pendidikan, penelitian, dan pengabdian kepada masyarakat, 
-          serta menjadi pusat pengembangan ilmu pengetahuan berbasis nilai-nilai Islam.
-        </Text>
-      </View>
+      <Text style={styles.title}>Daftar Mahasiswa Kelas B</Text>
+      {users.map((user) => (
+        
+        <Link
+          key={user.id}
+          href={`/user/${user.id}`}
+          style={styles.item}
+        >
+          <Ionicons name="person-circle-outline" size={24} style={styles.icon} />
+          <Text style={styles.name}>{user.name}</Text>
+        </Link>
+      ))}
     </ScrollView>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    padding: 20,
+    backgroundColor: '#f8f8f8',
+  },
+  title: {
+    fontSize: 40,
+    fontWeight: 'bold',
+    marginBottom: 30,
+    textAlign: 'center',
+  },
+  item: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 15,
+    padding: 10,
+    backgroundColor: '#fff',
+    borderRadius: 10,
+    elevation: 1,
+  },
+  icon: {
+    marginRight: 10,
+  },
+  name: {
+    fontSize: 16,
+  },
+});
